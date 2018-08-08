@@ -16,11 +16,12 @@ public class CompositeChannel<T> implements Channel<T> {
         this.channels = channels;
     }
 
-
+    @Override
     public Disposable subscribe(DisposingExecutor executor, Callback<T> receive) {
         final Disposable[] all = new Disposable[channels.length];
         Disposable d = new Disposable() {
 
+            @Override
             public void dispose() {
                 for (Disposable disposable : all) {
                     disposable.dispose();
@@ -35,10 +36,12 @@ public class CompositeChannel<T> implements Channel<T> {
         return d;
     }
 
+    @Override
     public Disposable subscribe(Subscribable<T> sub) {
         final Disposable[] all = new Disposable[channels.length];
         Disposable d = new Disposable() {
 
+            @Override
             public void dispose() {
                 for (Disposable disposable : all) {
                     disposable.dispose();
@@ -53,6 +56,7 @@ public class CompositeChannel<T> implements Channel<T> {
         return d;
     }
 
+    @Override
     public void publish(T msg) {
         for (Channel<T> channel : channels) {
             channel.publish(msg);

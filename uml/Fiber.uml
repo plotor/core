@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.jetlang.fibers.Fiber</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">org.jetlang.core.Disposable</node>
+    <node x="183.5" y="0.0">java.util.concurrent.Executor</node>
+    <node x="109.75" y="170.0">org.jetlang.fibers.Fiber</node>
+    <node x="146.5" y="85.0">org.jetlang.core.DisposingExecutor</node>
+    <node x="3.5" y="85.0">org.jetlang.core.Scheduler</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.jetlang.fibers.Fiber" target="org.jetlang.core.DisposingExecutor">
+      <point x="21.5" y="-17.5" />
+      <point x="174.25" y="145.0" />
+      <point x="240.5" y="145.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="org.jetlang.core.DisposingExecutor" target="java.util.concurrent.Executor">
+      <point x="0.0" y="-17.5" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="org.jetlang.core.Scheduler" target="org.jetlang.core.Disposable">
+      <point x="0.0" y="-17.5" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="org.jetlang.fibers.Fiber" target="org.jetlang.core.Scheduler">
+      <point x="-21.5" y="-17.5" />
+      <point x="131.25" y="145.0" />
+      <point x="65.0" y="145.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="167.5" y="102.5" />
+  <SelectedNodes>
+    <node>org.jetlang.fibers.Fiber</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

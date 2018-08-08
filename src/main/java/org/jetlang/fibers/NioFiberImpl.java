@@ -55,7 +55,7 @@ public class NioFiberImpl implements Runnable, NioFiber {
 
         @Override
         public void addHandler(NioChannelHandler handler) {
-            synchronousAdd(handler);
+            NioFiberImpl.this.synchronousAdd(handler);
         }
 
         @Override
@@ -74,7 +74,7 @@ public class NioFiberImpl implements Runnable, NioFiber {
             }
             if (key == null) {
                 final NioStateWrite handler = new NioStateWrite<>(accept, writeFailed, onBuffer);
-                key = synchronousAdd(handler);
+                key = NioFiberImpl.this.synchronousAdd(handler);
                 if (key == null) {
                     return;
                 }
@@ -95,7 +95,7 @@ public class NioFiberImpl implements Runnable, NioFiber {
 
         @Override
         public boolean close(SelectableChannel channel) {
-            closeQuietly(channel);
+            NioFiberImpl.this.closeQuietly(channel);
             final NioState nioState = handlers.remove(channel);
             if (nioState != null) {
                 nioState.onEnd();
@@ -255,7 +255,7 @@ public class NioFiberImpl implements Runnable, NioFiber {
 
         @Override
         public void onSelectorEnd() {
-            onEnd();
+            this.onEnd();
         }
 
         public int buffer(ByteBuffer buffer) {
@@ -311,7 +311,7 @@ public class NioFiberImpl implements Runnable, NioFiber {
             throw new RuntimeException(e);
         }
         for (NioChannelHandler nioHandler : nioHandlers) {
-            synchronousAdd(nioHandler);
+            this.synchronousAdd(nioHandler);
         }
         queue = new QueueSwapper(selector);
         thread = new Thread(this, threadName);
@@ -349,10 +349,10 @@ public class NioFiberImpl implements Runnable, NioFiber {
 
     @Override
     public void addHandler(final NioChannelHandler handler) {
-        if (onSelectorThread()) {
+        if (this.onSelectorThread()) {
             NioFiberImpl.this.synchronousAdd(handler);
         } else {
-            execute(new Runnable() {
+            this.execute(new Runnable() {
                 @Override
                 public void run() {
                     NioFiberImpl.this.synchronousAdd(handler);
@@ -363,10 +363,10 @@ public class NioFiberImpl implements Runnable, NioFiber {
 
     @Override
     public void close(final SelectableChannel channel) {
-        if (onSelectorThread()) {
+        if (this.onSelectorThread()) {
             controls.close(channel);
         } else {
-            execute(new Callback<NioControls>() {
+            this.execute(new Callback<NioControls>() {
                 @Override
                 public void onMessage(NioControls message) {
                     controls.close(channel);
@@ -382,7 +382,7 @@ public class NioFiberImpl implements Runnable, NioFiber {
 
     @Override
     public void execute(final Callback<NioControls> asyncWrite) {
-        execute(new Runnable() {
+        this.execute(new Runnable() {
             @Override
             public void run() {
                 asyncWrite.onMessage(controls);
@@ -462,7 +462,6 @@ public class NioFiberImpl implements Runnable, NioFiber {
         }
     }
 
-
     @Override
     public void start() {
         thread.start();
@@ -478,10 +477,10 @@ public class NioFiberImpl implements Runnable, NioFiber {
                     Set<SelectionKey> selectedKeys = selector.selectedKeys();
                     for (SelectionKey key : selectedKeys) {
                         final NioState attachment = (NioState) key.attachment();
-                        NioChannelHandler.Result result = execEvent(key, attachment);
-                        switch (result){
+                        NioChannelHandler.Result result = this.execEvent(key, attachment);
+                        switch (result) {
                             case CloseSocket:
-                                closeQuietly(attachment.channel);
+                                this.closeQuietly(attachment.channel);
                             case RemoveHandler:
                                 handlers.remove(attachment.channel);
                                 key.cancel();

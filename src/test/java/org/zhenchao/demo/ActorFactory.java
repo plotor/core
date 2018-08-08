@@ -20,20 +20,20 @@ public class ActorFactory {
         fiberFactory = new PoolFiberFactory(threads);
     }
 
-    public Fiber startFiber() {
-        Fiber fiber = fiberFactory.create();
-        fiber.start();
-        return fiber;
-    }
-
-    public <T> Channel<T> createInbox() {
-        return new MemoryChannel<>();
-    }
-
     public <T> Actor<T> createActor(Callback<T> actorCallback) {
         Fiber fiber = this.startFiber();
         Channel<T> inbox = this.createInbox();
         inbox.subscribe(fiber, actorCallback);
         return new Actor<>(fiber, inbox, actorCallback);
+    }
+
+    private Fiber startFiber() {
+        Fiber fiber = fiberFactory.create();
+        fiber.start();
+        return fiber;
+    }
+
+    private <T> Channel<T> createInbox() {
+        return new MemoryChannel<>();
     }
 }

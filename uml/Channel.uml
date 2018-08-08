@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.jetlang.channels.Channel</OriginalElement>
+  <nodes>
+    <node x="143.0" y="85.0">org.jetlang.channels.Channel</node>
+    <node x="213.0" y="170.0">org.jetlang.channels.MemoryChannel</node>
+    <node x="206.25" y="0.0">org.jetlang.channels.Subscriber</node>
+    <node x="0.0" y="170.0">org.jetlang.channels.CompositeChannel</node>
+    <node x="68.25" y="0.0">org.jetlang.channels.Publisher</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.jetlang.channels.Channel" target="org.jetlang.channels.Publisher">
+      <point x="-27.75" y="-17.5" />
+      <point x="170.75" y="60.0" />
+      <point x="127.25" y="60.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="org.jetlang.channels.CompositeChannel" target="org.jetlang.channels.Channel">
+      <point x="0.0" y="-17.5" />
+      <point x="96.5" y="145.0" />
+      <point x="170.75" y="145.0" />
+      <point x="-27.75" y="17.5" />
+    </edge>
+    <edge source="org.jetlang.channels.Channel" target="org.jetlang.channels.Subscriber">
+      <point x="27.75" y="-17.5" />
+      <point x="226.25" y="60.0" />
+      <point x="269.75" y="60.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="org.jetlang.channels.MemoryChannel" target="org.jetlang.channels.Channel">
+      <point x="0.0" y="-17.5" />
+      <point x="300.5" y="145.0" />
+      <point x="226.25" y="145.0" />
+      <point x="27.75" y="17.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="132.5" y="60.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

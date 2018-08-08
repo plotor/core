@@ -36,8 +36,7 @@ public class SubscriberList<T> {
         lock.lock();
         try {
             subscribers = EMPTY;
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -53,12 +52,14 @@ public class SubscriberList<T> {
                     break;
                 }
             }
-            if (index == -1)
+            if (index == -1) {
                 return false;
+            }
             Callback<T>[] resized = new Callback[subscribers.length - 1];
             System.arraycopy(subscribers, 0, resized, 0, index);
-            if (index != resized.length)
+            if (index != resized.length) {
                 System.arraycopy(subscribers, index + 1, resized, index, resized.length - index);
+            }
 
             subscribers = resized;
             return true;

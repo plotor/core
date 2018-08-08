@@ -17,17 +17,17 @@ public class Player implements Callback<PlayMessage> {
         this.name = name;
     }
 
+    @Override
+    public void onMessage(PlayMessage message) {
+        message.getResponseActor().send(new ThrowMessage(name, this.randomMove()));
+    }
+
     /**
-     * 返回一个随机的 {@link Move} 对象
+     * 随机出剪刀石头布
      *
      * @return
      */
     private Move randomMove() {
         return Move.values()[RANDOM.nextInt(Move.values().length)];
-    }
-
-    @Override
-    public void onMessage(PlayMessage message) {
-        message.getResponseActor().send(new ThrowMessage(name, this.randomMove()));
     }
 }

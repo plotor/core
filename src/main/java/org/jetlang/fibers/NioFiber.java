@@ -13,10 +13,10 @@ public interface NioFiber extends Fiber {
      */
     void close(final SelectableChannel channel);
 
-    /*
-    Checks to see if the currently executing thread is the selector thread.
-    Often used to determine whether the selector state can be immediately modified
-    or changed asynchronously.
+    /**
+     * Checks to see if the currently executing thread is the selector thread.
+     * Often used to determine whether the selector state can be immediately modified
+     * or changed asynchronously.
      */
     boolean onSelectorThread();
 
